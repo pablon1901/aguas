@@ -60,6 +60,7 @@ const ClienteSchema = new mongoose.Schema({
     nombre:String,
     apellido:String
 });
+const Cliente = mongoose.model('Cliente', ClienteSchema);
  //Definir esquema Distribuidor
 const DistribuidorSchema = new mongoose.Schema({
     nombre:String,
