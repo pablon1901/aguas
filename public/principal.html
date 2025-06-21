@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido</title>
+    <link rel="icon" type="imagen/png" href="gotita.png">
+    
+</head>
+<body>
+    <video autoplay muted loop id="bg-video">
+        <source src="pasteleria.mp4" type="video/mp4" />
+    </video>
+
+    <div class="contenedor">
+        <div class="branding">
+            <center>
+             <img src="gotita.png" alt="Logo de pasteleria mercantil" />
+            </center>
+        <p> Gestion de agua </p>
+        </div>
+
+       <nav class="menu">
+        <ul>
+            <li><a href="vehiculos.html">Vehiculos</a></li>
+            <li><a href="clientes.html">Clientes</a></li>
+            <li><a href="distribuidores.html">Distribuidores</a></li>
+            <li><a href="empleados.html">Empleados</a></li>
+            <li><a href="agua_reciclada.html">Agua reciclada</a></li>
+            <li><a href="index.html">Cerrar Sesion</a></li>
+        </ul>
+       </nav>
+    </div>   
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body.html {
+        height: 100%;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    #bg-video {
+        position: fixed;
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        min-height: 100%;
+        object-fit: cover;
+        z-index: -1;
+        filter: brightness(0.7);
+    }
+    .contenedor {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        width: 90%;
+        color:white;
+        gap: 15px;    
+    }
+    .branding img {
+        width: 50%;
+    }
+    .branding span {
+        font-family: 'Pacifico', cursive;
+        font-size: 4.5rem;
+    }
+    .branding p {
+        margin-top: 1rem;
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        text-align: center;
+    }
+    .menu {
+        background:whitesmoke;
+        padding: 2ren 3rem;
+        border-radius: 30px;
+        color: black;
+        height: 70vh;
+        width: 50vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .menu ul {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+    }
+    .menu a {
+        text-decoration: none;
+        color: black;
+        background-color: rgba(43, 127, 148, 0.8);
+        font-weight: bold;
+        letter-spacing: 1px;
+        font-size: 1rem;
+        transition: color 0.3s;
+    }
+    .menu a:hover {
+        color: #2b2f31;
+    }
+    
+</style>
