@@ -1,1 +1,232 @@
-<html></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="gotita.png">
+    <title>Distribuidores</title>
+</head>
+<body>
+    
+    <!-- Menu de navegacion -->
+     <div class="menu">
+        <a href="clientes.html">Clientes</a>
+        <a href="vehiculos.html">Vehiculos</a>
+        <a href="empleados.html">Empleados</a>
+        <a href="agua_reciclada.html">Agua reciclada</a>
+        <a href="index.html">Cerrar sesión</a>
+     </div>
+     <center><h2>Vista de Distribuidores</h2></center>
+     
+     <div class="agregar-distribuidor-container">
+        <h3>Agregar Distribuidor</h3>
+        <form id="formDistribuidor" class="form-horizontal">
+            <input type="text" id="nombre" placeholder="nombre" required>
+            <input type="text" id="apellido" placeholder="apellido" required min="0">
+            <button type="submit">Agregar</button>
+        </form>
+     </div>
+<!-- tabla de Distribuidores agregados -->
+     <div class="tabla-container">
+            <table id="tablaDistribuidores">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Apellido</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+        
+            <tbody>
+                <!-- Aqui se agregan las filas del nuevo Distribuidor  -->
+            </tbody>
+        </table>
+     </div>
+
+     <script>
+        // funcion para cargar y mostrar Distribuidores eliminar
+        async function cargarDistribuidores(){
+            const res = await fetch('/api/distribuidores');
+            const distribuidores = await res.json();
+            const tbody = document.querySelector('#tablaDistribuidores tbody');
+            tbody.innerHTML = distribuidores.map(p =>  `
+            <tr>
+                <td>${p.nombre}</td>
+                <td>${p.apellido}</td>
+                <td>
+                    <button class="btn-eliminar" 
+                    onclick = "eliminarDistribuidor'${p._id}')">Eliminar</button>
+                </td>
+            </tr>
+            `).join('');
+        }
+
+        //funcion para eliminar Distribuidores preguntando al usuario
+        async function eliminarDistribuidor(id){
+            const confirmar = confirm("¿Estas seguro de eliminar?");
+            if(!confirmar)return;
+            await fetch(`/api/distribuidores/${id}`,{method:'DELETE'});
+            cargarDistribuidores();
+        }
+
+        //Manejar el evento submit
+        document.getElementById('formDistribuidor').addEventListener('submit' ,async (e) =>  {
+            e.preventDefault();
+            const nombre =document.getElementById('nombre').value;
+            const apellido =document.getElementById('apellido').value;
+            await fetch ('/api/distribuidores',{
+                method:'POST',
+                headers:{'Content-Type':'application/json'},
+                body:JSON.stringify({nombre,apellido})
+            });
+            document.getElementById('formDistribuidor').reset();
+            cargarDistribuidores();
+        });
+        cargarDistribuidores();
+        window.eliminarDistribuidor = eliminarDistribuidor;
+     </script>
+
+<style>/* Estilos generales */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #3fa9ff;
+    padding: 20px;
+    color: #fff;
+}
+
+/* Menú de navegación */
+.menu {
+    background-color: #1867dd;
+    padding: 15px;
+    text-align: center;
+    border-radius: 10px;
+    margin-bottom: 30px;
+}
+
+.menu a {
+    color: white;
+    text-decoration: none;
+    margin: 0 15px;
+    font-weight: bold;
+    font-size: 1em;
+    transition: color 0.3s;
+}
+
+.menu a:hover {
+    color: #cfe8ff;
+}
+
+/* Título */
+h2 {
+    color: white;
+    margin-bottom: 30px;
+}
+
+/* Contenedor del formulario */
+.agregar-distribuidor-container {
+    background-color: #1867dd;
+    padding: 25px;
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.agregar-distribuidor-container h3 {
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    color: white;
+}
+
+/* Estilo del formulario */
+#formDistribuidor input[type="text"] {
+    width: 80%;
+    padding: 12px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.9);
+    color: #333;
+}
+
+#formDistribuidor button {
+    background-color: #03477d;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1em;
+    margin-top: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#formDistribuidor button:hover {
+    background-color: #05579a;
+}
+
+/* Tabla de empleados */
+.tabla-container {
+    max-width: 800px;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+th {
+    background-color: #1867dd;
+    color: white;
+}
+
+tr:hover {
+    background-color: #f1f1f1;
+}
+
+.btn-eliminar {
+    background-color: #b03a7a;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.btn-eliminar:hover {
+    background-color: #922c60;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .agregar-cliente-container,
+    .tabla-container {
+        width: 95%;
+    }
+
+    #formCliente input[type="text"] {
+        width: 90%;
+    }
+}
+</style>
+
+</body>
+</html>

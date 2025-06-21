@@ -60,7 +60,12 @@ const ClienteSchema = new mongoose.Schema({
     nombre:String,
     apellido:String
 });
-const Cliente = mongoose.model('Cliente', ClienteSchema);
+ //Definir esquema Distribuidor
+const DistribuidorSchema = new mongoose.Schema({
+    nombre:String,
+    apellido:String
+});
+const Distribuidor = mongoose.model('Distribuidor', DistribuidorSchema);
 
  //Definir esquema cliente
 const AguaSchema = new mongoose.Schema({
@@ -201,6 +206,35 @@ app.delete('/api/clientes/:id', async (req, res) => {
     await Cliente.findByIdAndDelete(req.params.id);
     //responde con un mensaje de éxito
     res.send('Cliente eliminado');
+});
+
+
+
+
+//Ruta para obtener todos los distribuidores
+app.get('/api/distribuidores' , async(req, res) => { 
+//Busca todos los distribuidores en la base de datos
+const distribuidores=await Distribuidor.find();
+//Devuelve la lista de distribuidores en formato JSON
+res.json(distribuidores);    
+});
+
+//Ruta para crear un nuevo Distribuidor
+   app.post('/api/distribuidores', async (req,res)=> {
+    //Crea un nuevo distribuidor  con los datos recibidos en la seleccion
+   const nuevo =new Distribuidor (req.body);
+   //guarda el distribuidor en la base de datos
+   await nuevo.save();
+   //responde con un mensaje de exito y codigo 201 (creado)
+   res.status(201).send('distribuidor creado');
+});
+
+//Eliminar el Distribuidor por id
+app.delete('/api/distribuidores/:id', async (req, res) => {
+    //elimina el Distribuidor por id
+    await Distribuidor.findByIdAndDelete(req.params.id);
+    //responde con un mensaje de éxito
+    res.send('Distribuidor eliminado');
 });
 
 
