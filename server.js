@@ -9,7 +9,7 @@ const bcrypt = require('bcrypt'); //incriptar contraseñas
 //Crear una instancia de la app express 
 const app = express();
 //Definir el puerto donde se ejecutará el servidor
-const PORT =3000;
+const PORT = process.env.PORT || 3000; //usa el puerto que asigne railwey o local 3000
 
 //habilitar cors para permitir peticiones
 app.use(cors());
@@ -20,15 +20,13 @@ app.use(bodyParser.json());
 app.use(express.static('public'));
 
 //conexion a mongoDB
-mongoose.connect('mongodb://localhost:27017/gestion_de_agua',{ 
-    useNewUrlParser: true, //usa el parser del url
-    useUnifiedTopology: true //motor de monitoreo 
+mongoose.connect(process.env.MONGODB_URI, { 
+    useNewUrlParser: true, 
+    useUnifiedTopology: true 
 })
 
-//si la conexion es exitosa , muestra mensaje 
-.then(() => console.log('Conexión exitosa a MongoDB'))
-//si hay un error en la conexion, muestra mensaje
-.catch(err => console.error(err));
+.then(() => console.log('Conexión a MongoDB ATLAS'))
+.catch(err => console.error('Error de conexion:', err));
 
 //esquemas y modelos 
 
